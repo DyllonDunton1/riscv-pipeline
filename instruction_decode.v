@@ -3,13 +3,18 @@
 module instruction_decode(
         input clock,
         input [31:0] data_in,
-        output reg [39:0] char_out,
-		  output reg test_led
+        output reg [5:0] instr_id,
+	output reg test_led
 );
+
 		initial begin
 			test_led = 1'b0;
-                        char_out = "XXXXX";
+			instr_id = 6'b111111;
 		end
+
+/* 6-bit identifier is sent out rather than a string, starts at 000000 for add,
+* and follows the risc-v reference sheet for the order.
+*/
 
         always @(posedge clock) begin
 		if (data_in[6:0] == 7'b0110011) begin
@@ -18,157 +23,157 @@ module instruction_decode(
 				//add or sub
 				if (data_in[31:25] == 7'h00) begin
 					//add
-					char_out <= "ADD  ";
+					instr_id <= 6'd0;
 					test_led <= 1'b1;
 				end
 				else begin
 					//sub
-					char_out <= "SUB  ";
+					instr_id <= 6'd1;
 				end
 			end
 			if (data_in[14:12] == 3'h1) begin
 				//shift left logical
-				char_out <= "SLL  ";
+				instr_id <= 6'b000101;
 			end
 			if (data_in[14:12] == 3'h2) begin
 				//set less than
-				char_out <= "SLT  ";
+				instr_id <= 6'b001000;
 			end
 			if (data_in[14:12] == 3'h3) begin
 				//set less than u
-				char_out <= "SLTU ";
+				instr_id <= 6'b001001;
 			end
 			if (data_in[14:12] == 3'h4) begin
 				//xor
-				char_out <= "XOR  ";
+				instr_id <= 6'b000010;
 			end
 			if (data_in[14:12] == 3'h5) begin
 				//shift right (log or arth)
 				if (data_in[31:25] == 7'h00) begin
 					//shift right logical
-					char_out <= "SRL  ";
+					instr_id <= 6'b000110;
 				end
 				else begin
 					//shift right arith
-					char_out <= "SRA  ";
+					instr_id <= 6'b000111;
 				end
 			end
 			if (data_in[14:12] == 3'h6) begin
 				//or
-				char_out <= "OR   ";
+				instr_id <= 6'b000011;
 			end
 			if (data_in[14:12] == 3'h7) begin
 				//and
-				char_out <= "AND  ";
+				instr_id <= 6'b000100;
 			end
 		end
 		if (data_in[6:0] == 7'b0100011) begin
 			//S-TYPE
 			if (data_in[14:12] == 3'h0) begin
 				//store byte
-				char_out <= "SB   ";
+				instr_id <= 6'd24;
 			end
 			if (data_in[14:12] == 3'h1) begin
 				//store half
-				char_out <= "SH   ";
+				instr_id <= 6'd25;
 			end
 			if (data_in[14:12] == 3'h2) begin
 				//store word
-				char_out <= "SW   ";
+				instr_id <= 6'd26;
 			end
 		end
 		if (data_in[6:0] == 7'b1101111) begin
 			//J-TYPE
 			//jump and link
-			char_out <= "JAL  ";
+			instr_id <= 6'd33;
 		end
 		if (data_in[6:0] == 7'b0110111) begin
 			//U-TYPE
 			//load upper imm
-			char_out <= "LUI  ";
+			instr_id <= 6'd35;
 		end
 		if (data_in[6:0] == 7'b0010111) begin
 			//U-TYPE
 			//add upper imm to pc
-			char_out <= "AUIPC";
+			instr_id <= 6'd36;
 		end
 
 
                 /* I TYPE addi, xori, ori, andi, slli, srli, srai, slti, sltiu  */
                 if (data_in[6:0] == 7'b0010011) begin
                         if (data_in[14:12] == 3'h0) begin        // addi
-                                char_out <= "ADDI ";
+                                instr_id <= 6'd10;
                         end
                         if (data_in[14:12] == 3'h4) begin        // xori
-                                char_out <= "XORI ";
+                                instr_id <= 6'd11;
                         end
                         if (data_in[14:12] == 3'h6) begin        // ori
-                                char_out <= "ORI  ";
+                                instr_id <= 6'd12;
                         end
                         if (data_in[14:12] == 3'h7) begin        // andi
-                                char_out <= "ANDI ";
+                                instr_id <= 6'd13;
                         end
                         if (data_in[14:12] == 3'h1) begin        // slli
-                                char_out <= "SLLI ";
+                                instr_id <= 6'd14;
                         end
                         if (data_in[14:12] == 3'h5) begin        // srli & srai
                                 if (data_in[31:25] == 7'h00) begin
-                                        char_out <= "SRLI ";
+                                        instr_id <= 6'd15;
                                 end
                                 if (data_in[31:25] == 7'h20) begin
-                                        char_out <= "SRAI ";
+                                        instr_id <= 6'd16;
                                 end
                         end
                         if (data_in[14:12] == 3'h2) begin        // slti
-                                char_out <= "SLTI ";
+                                instr_id <= 6'd17;
                         end
                         if (data_in[14:12] == 3'h3) begin        // sltiu
-                                char_out <= "SLTIU";
+                                instr_id <= 6'd18;
                         end
                 end
                 /* I TYPE lb, lh, lw, lbu, lhu */
                 if (data_in[6:0] == 7'b0000011) begin
                         if (data_in[14:12] == 3'h0) begin        // lb
-                                char_out <= "LB   ";
+                                instr_id <= 6'd19;
                         end
                         if (data_in[14:12] == 3'h1) begin        // lh
-                                char_out <= "LH   ";
+                                instr_id <= 6'd20;
                         end
                         if (data_in[14:12] == 3'h2) begin        // lw
-                                char_out <= "LW   ";
+                                instr_id <= 6'd21;
                         end
                         if (data_in[14:12] == 3'h4) begin        // lbu
-                                char_out <= "LBU  ";
+                                instr_id <= 6'd22;
                         end
                         if (data_in[14:12] == 3'h5) begin        // lhu
-                                char_out <= "LHU  ";
+                                instr_id <= 6'd23;
                         end
                 end
                 /* B TYPE beq, bne, blt, bge, bltu, bgeu */
                 if (data_in[6:0] == 7'b1100011) begin
                         if (data_in[14:12] == 3'h0) begin        // beq
-                                char_out <= "BEQ  ";
+                                instr_id <= 6'd27;
                         end
                         if (data_in[14:12] == 3'h1) begin        // bne
-                                char_out <= "BNE  ";
+                                instr_id <= 6'd28;
                         end
                         if (data_in[14:12] == 3'h4) begin        // blt
-                                char_out <= "BLT  ";
+                                instr_id <= 6'd29;
                         end
                         if (data_in[14:12] == 3'h5) begin        // bge
-                                char_out <= "BGE  ";
+                                instr_id <= 6'd30;
                         end
                         if (data_in[14:12] == 3'h6) begin        // bltu
-                                char_out <= "BLTU ";
+                                instr_id <= 6'd31;
                         end
                         if (data_in[14:12] == 3'h7) begin        // bgeu
-                                char_out <= "BGEU ";
+                                instr_id <= 6'd32;
                         end
                 end
                 /* I TYPE jalr */
                 if (data_in[6:0] == 7'b1100111) begin
                         if (data_in[14:12] == 3'h0) begin        // jalr
-                                char_out <= "JALR ";
+                                instr_id <= 6'd34;
                         end
                 end
 
