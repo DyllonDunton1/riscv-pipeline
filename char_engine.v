@@ -33,11 +33,11 @@ module char_engine(
 	input [31:0] gp_reg_0D,
 	input [31:0] gp_reg_0E,
 	input [31:0] gp_reg_0F,
-	input wire [6:0] instruction,
+	input wire [5:0] instruction,
 	
 	/************************/
 	
-	output reg [7:0] mem_out, //if everything is backwards, swap the bit order on this output and recompile!
+	output reg [0:7] mem_out, //if everything is backwards, swap the bit order on this output and recompile!
 	
 	/************************/
 	
@@ -48,7 +48,7 @@ module char_engine(
 	output reg [5:0] ins_sw,
 	output reg [5:0] mem_sw);
 	
-	reg [39:0] yourname = "ADD  ";
+	reg [39:0] yourname = "XXXXX";
 	
 	assign mem_write = 1;
 	
@@ -170,11 +170,11 @@ module char_engine(
 	end
 	
 	always @(posedge clock) begin //semi-pipelined design, only executes one if statement per clock
-				
+			
 		if (x < 0) begin //source and slice steps
 			if (slice_delay == 0) data_index = data_index + 1;
 			source_data();
-			if (data_index > NUM_LABEL_TASKS) slice_data ();
+			if (data_index > NUM_LABEL_TASKS && data_index != (NUM_LABEL_TASKS + 29)) slice_data ();
 			slice_delay = slice_delay + 1;
 			if (slice_delay == 2) begin
 				x = num_chars - 1;
@@ -223,6 +223,46 @@ module char_engine(
 			pc_history[2] = pc_history[1];
 			pc_history[1] = pc_history[0];
 			pc_history[0] = prg_counter;
+			
+		case (instruction)
+					6'd0  : yourname = "ADD  ";
+					6'd1  : yourname = "SUB  ";
+					6'd2  : yourname = "XOR  ";
+					6'd3  : yourname = "OR   ";
+					6'd4  : yourname = "AND  ";
+					6'd5  : yourname = "SLL  ";
+					6'd6  : yourname = "SRL  ";
+					6'd7  : yourname = "SRA  ";
+					6'd8  : yourname = "SLT  ";
+					6'd9  : yourname = "SLTU ";
+					6'd10 : yourname = "ADDI ";
+					6'd11 : yourname = "XORI ";
+					6'd12 : yourname = "ORI  ";
+					6'd13 : yourname = "ANDI ";
+					6'd14 : yourname = "SLLI ";
+					6'd15 : yourname = "SRLI ";
+					6'd16 : yourname = "SRAI ";
+					6'd17 : yourname = "SLTI ";
+					6'd18 : yourname = "SLTIU";
+					6'd19 : yourname = "LB   ";
+					6'd20 : yourname = "LH   ";
+					6'd21 : yourname = "LW   ";
+					6'd22 : yourname = "LBU  ";
+					6'd23 : yourname = "LHU  ";
+					6'd24 : yourname = "SB   ";
+					6'd25 : yourname = "SH   ";
+					6'd26 : yourname = "SW   ";
+					6'd27 : yourname = "BEQ  ";
+					6'd28 : yourname = "BNE  ";
+					6'd29 : yourname = "BLT  ";
+					6'd30 : yourname = "BGE  ";
+					6'd31 : yourname = "BLTU ";
+					6'd32 : yourname = "BGEU ";
+					6'd33 : yourname = "JAL  ";
+					6'd34 : yourname = "JALR ";
+					6'd35 : yourname = "LUI  ";
+					6'd36 : yourname = "AUIPC";
+				endcase
 		end
 	end
 	always begin 
@@ -580,48 +620,6 @@ module char_engine(
 				end
 				
 			26: begin //Your Name 
-			
-					case (instruction)
-						6'd0  : yourname = "ADD  "
-						6'd1  : yourname = "SUB  "
-						6'd2  : yourname = "XOR  "
-						6'd3  : yourname = "OR   "
-						6'd4  : yourname = "AND  "
-						6'd5  : yourname = "SLL  "
-						6'd6  : yourname = "SRL  "
-						6'd7  : yourname = "SRA  "
-						6'd8  : yourname = "SLT  "
-						6'd9  : yourname = "SLTU "
-						6'd10 : yourname = "ADDI "
-						6'd11 : yourname = "XORI "
-						6'd12 : yourname = "ORI  "
-						6'd13 : yourname = "ANDI "
-						6'd14 : yourname = "SLLI "
-						6'd15 : yourname = "SRLI "
-						6'd16 : yourname = "SRAI "
-						6'd17 : yourname = "SLTI "
-						6'd18 : yourname = "SLTIU"
-						6'd19 : yourname = "LB   "
-						6'd20 : yourname = "LH   "
-						6'd21 : yourname = "LW   "
-						6'd22 : yourname = "LBU  "
-						6'd23 : yourname = "LHU  "
-						6'd24 : yourname = "SB   "
-						6'd25 : yourname = "SH   "
-						6'd26 : yourname = "SW   "
-						6'd27 : yourname = "BEQ  "
-						6'd28 : yourname = "BNE  "
-						6'd29 : yourname = "BLT  "
-						6'd30 : yourname = "BGE  "
-						6'd31 : yourname = "BLTU "
-						6'd32 : yourname = "BGEU "
-						6'd33 : yourname = "JAL  "
-						6'd34 : yourname = "JALR "
-						6'd35 : yourname = "LUI  "
-						6'd36 : yourname = "AUIPC"
-			
-			
-			
 					//yourname = instruction;		
 					//yourname = "SUB  ";
 					i = 0;
@@ -908,6 +906,17 @@ module char_engine(
 					row = 44;
 					num_chars = 8;
 				end
+				
+			(NUM_LABEL_TASKS + 29): begin
+					i = 0;
+					while (i<yourname_chars) begin
+						hex_buffer[i] <= (((yourname>>(8*i)) & 8'h7F));						
+						i=i+1;
+					end	
+					row = 38;
+					column = 28;
+					num_chars = yourname_chars;
+			end
 				
 			default: data_index = NUM_LABEL_TASKS;
 		endcase

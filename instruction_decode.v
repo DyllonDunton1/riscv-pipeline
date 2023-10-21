@@ -7,11 +7,6 @@ module instruction_decode(
 	output reg test_led
 );
 
-		initial begin
-			test_led = 1'b0;
-			instr_id = 6'b111111;
-		end
-
 /* 6-bit identifier is sent out rather than a string, starts at 000000 for add,
 * and follows the risc-v reference sheet for the order.
 */
@@ -86,6 +81,7 @@ module instruction_decode(
 			//J-TYPE
 			//jump and link
 			instr_id <= 6'd33;
+			test_led <= 1'b0;
 		end
 		if (data_in[6:0] == 7'b0110111) begin
 			//U-TYPE
