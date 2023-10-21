@@ -33,7 +33,7 @@ module char_engine(
 	input [31:0] gp_reg_0D,
 	input [31:0] gp_reg_0E,
 	input [31:0] gp_reg_0F,
-	input wire [5:0] instruction,
+	input wire [39:0] instruction,
 	
 	/************************/
 	
@@ -223,46 +223,7 @@ module char_engine(
 			pc_history[2] = pc_history[1];
 			pc_history[1] = pc_history[0];
 			pc_history[0] = prg_counter;
-			
-		case (instruction)
-					6'd0  : yourname = "ADD  ";
-					6'd1  : yourname = "SUB  ";
-					6'd2  : yourname = "XOR  ";
-					6'd3  : yourname = "OR   ";
-					6'd4  : yourname = "AND  ";
-					6'd5  : yourname = "SLL  ";
-					6'd6  : yourname = "SRL  ";
-					6'd7  : yourname = "SRA  ";
-					6'd8  : yourname = "SLT  ";
-					6'd9  : yourname = "SLTU ";
-					6'd10 : yourname = "ADDI ";
-					6'd11 : yourname = "XORI ";
-					6'd12 : yourname = "ORI  ";
-					6'd13 : yourname = "ANDI ";
-					6'd14 : yourname = "SLLI ";
-					6'd15 : yourname = "SRLI ";
-					6'd16 : yourname = "SRAI ";
-					6'd17 : yourname = "SLTI ";
-					6'd18 : yourname = "SLTIU";
-					6'd19 : yourname = "LB   ";
-					6'd20 : yourname = "LH   ";
-					6'd21 : yourname = "LW   ";
-					6'd22 : yourname = "LBU  ";
-					6'd23 : yourname = "LHU  ";
-					6'd24 : yourname = "SB   ";
-					6'd25 : yourname = "SH   ";
-					6'd26 : yourname = "SW   ";
-					6'd27 : yourname = "BEQ  ";
-					6'd28 : yourname = "BNE  ";
-					6'd29 : yourname = "BLT  ";
-					6'd30 : yourname = "BGE  ";
-					6'd31 : yourname = "BLTU ";
-					6'd32 : yourname = "BGEU ";
-					6'd33 : yourname = "JAL  ";
-					6'd34 : yourname = "JALR ";
-					6'd35 : yourname = "LUI  ";
-					6'd36 : yourname = "AUIPC";
-				endcase
+			yourname = instruction;
 		end
 	end
 	always begin 
