@@ -33,8 +33,7 @@ module char_engine(
 	input [31:0] gp_reg_0D,
 	input [31:0] gp_reg_0E,
 	input [31:0] gp_reg_0F,
-	
-	input [39:0] instruction,
+	input wire [39:0] instruction,
 	
 	/************************/
 	
@@ -48,6 +47,12 @@ module char_engine(
 	output reg [4:0] reg_sw,
 	output reg [5:0] ins_sw,
 	output reg [5:0] mem_sw);
+	
+	reg [39:0] yourname = "XXXXX";
+	initial begin
+		yourname = instruction;	
+	end
+	
 	
 	assign mem_write = 1;
 	
@@ -80,6 +85,7 @@ module char_engine(
 
 
 	//Set and Forget stuff
+	parameter yourname_chars = 5;								//# of characters, including spaces/other punct.
 	
 	reg [(partname_chars*8):0] partname = "DYLLON MIKE ";		//partners name in " "
 	parameter partname_chars = 12;									//# of characters, including spaces/other punct.
@@ -579,13 +585,13 @@ module char_engine(
 				
 			26: begin //Your Name 					
 					i = 0;
-					while (i<5) begin
-						hex_buffer[i] <= (((instruction>>(8*i)) & 8'h7F));						
+					while (i<yourname_chars) begin
+						hex_buffer[i] <= (((yourname>>(8*i)) & 8'h7F));						
 						i=i+1;
 					end					
 					row = 38;
 					column = 28;
-					num_chars = 5;
+					num_chars = yourname_chars;
 				end
 			
 			27: begin //Partners name
