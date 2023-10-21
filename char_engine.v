@@ -37,7 +37,7 @@ module char_engine(
 	
 	/************************/
 	
-	output reg [0:7] mem_out, //if everything is backwards, swap the bit order on this output and recompile!
+	output reg [7:0] mem_out, //if everything is backwards, swap the bit order on this output and recompile!
 	
 	/************************/
 	
@@ -48,11 +48,7 @@ module char_engine(
 	output reg [5:0] ins_sw,
 	output reg [5:0] mem_sw);
 	
-	reg [39:0] yourname = "XXXXX";
-	initial begin
-		yourname = instruction;	
-	end
-	
+	reg [39:0] yourname = "ADD  ";
 	
 	assign mem_write = 1;
 	
@@ -583,7 +579,9 @@ module char_engine(
 					num_chars = 19;
 				end
 				
-			26: begin //Your Name 					
+			26: begin //Your Name 
+					//yourname = instruction;		
+					yourname = "SUB  ";
 					i = 0;
 					while (i<yourname_chars) begin
 						hex_buffer[i] <= (((yourname>>(8*i)) & 8'h7F));						
