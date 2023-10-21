@@ -34,6 +34,8 @@ module char_engine(
 	input [31:0] gp_reg_0E,
 	input [31:0] gp_reg_0F,
 	
+	input [39:0] instruction,
+	
 	/************************/
 	
 	output reg [0:7] mem_out, //if everything is backwards, swap the bit order on this output and recompile!
@@ -78,10 +80,8 @@ module char_engine(
 
 
 	//Set and Forget stuff
-	reg [((yourname_chars*8)-1):0] yourname = "YOUR NAME";	//put your name in " "
-	parameter yourname_chars = 9;										//# of characters, including spaces/other punct.
 	
-	reg [(partname_chars*8):0] partname = "PARTNER NAME";		//partners name in " "
+	reg [(partname_chars*8):0] partname = "DYLLON MIKE ";		//partners name in " "
 	parameter partname_chars = 12;									//# of characters, including spaces/other punct.
 	
 	reg [7:0] group_num = "1";											//Enter your group number here
@@ -579,13 +579,13 @@ module char_engine(
 				
 			26: begin //Your Name 					
 					i = 0;
-					while (i<yourname_chars) begin
-						hex_buffer[i] <= (((yourname>>(8*i)) & 8'h7F));						
+					while (i<5) begin
+						hex_buffer[i] <= (((instruction>>(8*i)) & 8'h7F));						
 						i=i+1;
 					end					
 					row = 38;
 					column = 28;
-					num_chars = yourname_chars;
+					num_chars = 5;
 				end
 			
 			27: begin //Partners name
