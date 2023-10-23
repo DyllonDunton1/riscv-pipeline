@@ -83,7 +83,7 @@ module char_engine(
 	//Set and Forget stuff
 	parameter yourname_chars = 5;								//# of characters, including spaces/other punct.
 	
-	reg [(partname_chars*8):0] partname = "DYLLON-MIKE ";		//partners name in " "
+	reg [(partname_chars*8):0] partname = "DYLLON MIKE ";		//partners name in " "
 	parameter partname_chars = 12;									//# of characters, including spaces/other punct.
 	
 	reg [7:0] group_num = "1";											//Enter your group number here
