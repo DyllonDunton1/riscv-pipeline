@@ -5,7 +5,7 @@
 
 This had us go and add a decoder to the opcode and function code in order to display the current instruction on the screen, and display the PC history. Got a 200% ;)
 
-# Milestone 1a | Not Complete
+# Milestone 1a | Complete
 This is just a bunch of immediate add instructions. We need to:
 
 -Get rid of current connections to data memory
@@ -16,7 +16,7 @@ This is just a bunch of immediate add instructions. We need to:
 
 -Add in controller based on the decoder instruction to flick that multiplexor and control the ALU, and the multiplexor in the writeback stage
 
-# Milestone 1b | Not Complete
+# Milestone 1b | Complete
 This is a combination of add and addi. If we did 1a correctly, this should work. There are no data hazards yet since the instruction memory has stalls built in. We will have to make sure that nothing happens and the flow of data still happens... 
 Shouldn't be too bad though
 
