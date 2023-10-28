@@ -6,13 +6,15 @@ module instruction_decode(
         output reg [39:0] char_out,
 		  output reg test_led,
 		  output reg [5:0] type,
-		  output reg [31:0] imm
+		  output reg [31:0] imm,
+		  output reg load
 );
         initial begin
                 test_led = 1'b0;
                 char_out = "XXXXX";
 					 type = 6'b000000;
 					 imm = 0;
+					 load = 0;
         end
 
 			always @(posedge clock) begin
@@ -22,11 +24,13 @@ module instruction_decode(
 					char_out <= "NOP  ";
 					type = 6'b000000;
 					imm = 0;
+					load = 0;
 				end
 				if (data_in[6:0] == 7'b0110011) begin
 					//R-TYPE
 					type = 6'b100000;
 					imm = 0;
+					load = 0;
 					if (data_in[14:12] == 3'h0) begin
 						//add or sub
 						if (data_in[31:25] == 7'h00) begin
@@ -81,6 +85,7 @@ module instruction_decode(
 					imm[11:5] = data_in[31:25];
 					imm[4:0] = data_in[11:7];
 					type = 6'b001000;
+					load = 0;
 					if (data_in[14:12] == 3'h0) begin
 						//store byte
 						char_out <= "SB   ";
@@ -100,6 +105,7 @@ module instruction_decode(
 					type = 6'b000010;
 					//jump and link
 					char_out <= "JAL  ";
+					load = 0;
 				end
 				if (data_in[6:0] == 7'b0110111) begin
 					//U-TYPE
@@ -107,6 +113,7 @@ module instruction_decode(
 					type = 6'b000001;
 					//load upper imm
 					char_out <= "LUI  ";
+					load = 0;
 				end
 				if (data_in[6:0] == 7'b0010111) begin
 					//U-TYPE
@@ -114,12 +121,14 @@ module instruction_decode(
 					type = 6'b000001;
 					//add upper imm to pc
 					char_out <= "AUIPC";
+					load = 0;
 				end
 				/* I TYPE addi, xori, ori, andi, slli, srli, srai, slti, sltiu  */
 				if (data_in[6:0] == 7'b0010011) begin
 					imm = 0;
 					imm[11:0] = data_in[31:20];
 					type = 6'b010000;
+					load = 0;
 					if (data_in[14:12] == 3'h0) begin        // addi
 						char_out <= "ADDI ";
 					end
@@ -155,6 +164,7 @@ module instruction_decode(
 					type = 6'b000000;
 					imm = 0;
 					imm[11:0] = data_in[31:20];
+					load = 1;
 					if (data_in[14:12] == 3'h0) begin        // lb
 						char_out <= "LB   ";
 					end
@@ -174,7 +184,7 @@ module instruction_decode(
 				/* B TYPE beq, bne, blt, bge, bltu, bgeu */
 				if (data_in[6:0] == 7'b1100011) begin
 					type = 6'b000100;
-					
+					load = 0;
 					imm = 0;
 					imm[12] = data_in[31];
 					imm[11] = data_in[7];
@@ -205,6 +215,7 @@ module instruction_decode(
 				if (data_in[6:0] == 7'b1100111) begin
 					type = 6'b010000;
 					imm = 0;
+					load = 0;
 					if (data_in[14:12] == 3'h0) begin        // jalr
 						char_out <= "JALR ";
 					end
