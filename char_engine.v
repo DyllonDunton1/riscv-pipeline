@@ -90,7 +90,7 @@ module char_engine(
 	
 	//keep these numbers at one character, use hex digit for >9
 	//Change for each milestone/test stuff
-	reg [7:0] milestone_num = "1";									//Enter the Miletsone Number here, in " "
+	reg [7:0] milestone_num = "2";									//Enter the Miletsone Number here, in " "
 	reg [7:0] test_num = 	  "1";									//Enter the test number here in " "
 	
 	
@@ -102,25 +102,25 @@ module char_engine(
 -------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------*/
 
-	reg [(gpx00_chars*8):0] gpx00_label = "GP REGISTER 00";				//put label in " "
+	reg [(gpx00_chars*8):0] gpx00_label = "ALUSRC        ";				//put label in " "
 	parameter gpx00_chars = 14;													//# of characters, including spaces/other punct.
 	
-	reg [(gpx01_chars*8):0] gpx01_label = "GP REGISTER 01";				//put label in " "
+	reg [(gpx01_chars*8):0] gpx01_label = "MEMTOREG      ";				//put label in " "
 	parameter gpx01_chars = 14;													//# of characters, including spaces/other punct.
 	
-	reg [(gpx02_chars*8):0] gpx02_label = "GP REGISTER 02";				//put label in " "
+	reg [(gpx02_chars*8):0] gpx02_label = "RD            ";				//put label in " "
 	parameter gpx02_chars = 14;													//# of characters, including spaces/other punct.
 	
-	reg [(gpx03_chars*8):0] gpx03_label = "GP REGISTER 03";				//put label in " "
+	reg [(gpx03_chars*8):0] gpx03_label = "IMMEDIATE     ";				//put label in " "
 	parameter gpx03_chars = 14;													//# of characters, including spaces/other punct.
 	
-	reg [(gpx04_chars*8):0] gpx04_label = "GP REGISTER 04";				//put label in " "
+	reg [(gpx04_chars*8):0] gpx04_label = "ALU OUT       ";				//put label in " "
 	parameter gpx04_chars = 14;													//# of characters, including spaces/other punct.
 	
-	reg [(gpx05_chars*8):0] gpx05_label = "GP REGISTER 05";				//put label in " "
+	reg [(gpx05_chars*8):0] gpx05_label = "WB IN         ";				//put label in " "
 	parameter gpx05_chars = 14;													//# of characters, including spaces/other punct.
 	
-	reg [(gpx06_chars*8):0] gpx06_label = "GP REGISTER 06";				//put label in " "
+	reg [(gpx06_chars*8):0] gpx06_label = "WB OUT        ";				//put label in " "
 	parameter gpx06_chars = 14;													//# of characters, including spaces/other punct.
 	
 	reg [(gpx07_chars*8):0] gpx07_label = "GP REGISTER 07";				//put label in " "

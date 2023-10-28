@@ -14,6 +14,7 @@ module controller (
 	output reg PCSRC,
 	output reg ALUSRC,
 	output reg MEMTOREG,
+	output reg WRITEBACK_EN,
 	
 	output reg [8:0] type
 
@@ -25,6 +26,7 @@ module controller (
 		PCSRC = 0;
 		ALUSRC = 0;
 		MEMTOREG = 0;
+		WRITEBACK_EN = 0;
 		type = 0;
 	end
 
@@ -37,7 +39,7 @@ module controller (
 				PCSRC = 0;
 				ALUSRC = 0;
 				MEMTOREG = 0;
-				
+				WRITEBACK_EN = 0;
 				
 				
 			end
@@ -47,7 +49,7 @@ module controller (
 				PCSRC = 0;
 				ALUSRC = 0;
 				MEMTOREG = 0;
-				
+				WRITEBACK_EN = 0;
 				
 				
 				
@@ -108,7 +110,7 @@ module controller (
 				PCSRC = 0;
 				ALUSRC = 1;
 				MEMTOREG = 0;
-				
+				WRITEBACK_EN = 0;
 				
 				if (f3 == 3'h0) begin        // addi
 					char_out <= "ADDI ";
@@ -150,7 +152,7 @@ module controller (
 				PCSRC = 0;
 				ALUSRC = 1;
 				MEMTOREG = 1;
-				
+				WRITEBACK_EN = 0;
 				
 				if (f3 == 3'h0) begin        // lb
 					char_out <= "LB   ";
@@ -176,7 +178,7 @@ module controller (
 				PCSRC = 0;
 				ALUSRC = 1;
 				MEMTOREG = 1;
-				
+				WRITEBACK_EN = 1;
 				
 				
 				
@@ -201,7 +203,7 @@ module controller (
 				PCSRC = 0;
 				ALUSRC = 0;
 				MEMTOREG = 0;
-				
+				WRITEBACK_EN = 0;
 				
 								
 				if (f3 == 3'h0) begin        // beq
@@ -231,7 +233,7 @@ module controller (
 				PCSRC = 0;
 				ALUSRC = 0;
 				MEMTOREG = 0;
-				
+				WRITEBACK_EN = 0;
 				
 				
 				//jump and link
@@ -244,7 +246,7 @@ module controller (
 				PCSRC = 0;
 				ALUSRC = 0;
 				MEMTOREG = 0;
-				
+				WRITEBACK_EN = 0;
 				
 				
 				//load upper imm
@@ -256,7 +258,7 @@ module controller (
 				PCSRC = 0;
 				ALUSRC = 0;
 				MEMTOREG = 0;
-				
+				WRITEBACK_EN = 0;
 				
 				//add upper imm to pc
 				char_out <= "AUIPC";
@@ -269,7 +271,7 @@ module controller (
 				PCSRC = 0;
 				ALUSRC = 0;
 				MEMTOREG = 0;
-				
+				WRITEBACK_EN = 0;
 				
 				
 				if (f3 == 3'h0) begin        // jalr
