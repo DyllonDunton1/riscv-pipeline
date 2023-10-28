@@ -33,3 +33,5 @@ This one will be a little bit of a doozy. In order to get this working, we need 
 # Milestone 1d | Not Complete
 
 This will be 1c on steroids. After doing two addi instructions to setup the registers, every single instruction is a RAW hazard, which means we will need to have a bullet proof stall setup. I feel like this should just work if 1c does
+
+# Milestone 2ab | Complete
