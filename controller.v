@@ -17,7 +17,9 @@ module controller (
 	output reg WRITEBACK_EN,
 	output reg REG_EN,
 	
-	output reg [8:0] type
+	output reg [8:0] type,
+	
+	output reg [5:0] alu_op
 
 );
 	
@@ -30,6 +32,7 @@ module controller (
 		WRITEBACK_EN = 0;
 		REG_EN = 0;
 		type = 0;
+		alu_op = 6'd0;
 	end
 
 	always @(posedge clock) begin
@@ -43,6 +46,7 @@ module controller (
 				MEMTOREG = 0;
 				REG_EN = 0;
 				WRITEBACK_EN = 0;
+				alu_op = 6'd0;
 				
 				
 			end
@@ -62,46 +66,56 @@ module controller (
 					if (f7 == 7'h00) begin
 						//add
 						char_out <= "ADD  ";
+						alu_op = 6'd0;
 					end
 					else begin
 						//sub
 						char_out <= "SUB  ";
+						alu_op = 6'd1;
 					end
 				end
 				if (f3 == 3'h1) begin
 					//shift left logical
 					char_out <= "SLL  ";
+					alu_op = 6'd5;
 				end
 				if (f3 == 3'h2) begin
 					//set less than
 					char_out <= "SLT  ";
+					alu_op = 6'd8;
 				end
 				if (f3 == 3'h3) begin
 					//set less than u
 					char_out <= "SLTU ";
+					alu_op = 6'd9;
 				end
 				if (f3 == 3'h4) begin
 					//xor
 					char_out <= "XOR  ";
+					alu_op = 6'd2;
 				end
 				if (f3 == 3'h5) begin
 					//shift right (log or arth)
 					if (f7 == 7'h00) begin
 						//shift right logical
 						char_out <= "SRL  ";
+						alu_op = 6'd6;
 					end
 					else begin
 						//shift right arith
 						char_out <= "SRA  ";
+						alu_op = 6'd7;
 					end
 				end
 				if (f3 == 3'h6) begin
 					//or
 					char_out <= "OR   ";
+					alu_op = 6'd2;
 				end
 				if (f3 == 3'h7) begin
 					//and
 					char_out <= "AND  ";
+					alu_op = 6'd4;
 				end
 			end
 			
@@ -119,32 +133,41 @@ module controller (
 				
 				if (f3 == 3'h0) begin        // addi
 					char_out <= "ADDI ";
+					alu_op = 6'd10;
 				end
 				if (f3 == 3'h4) begin        // xori
 					char_out <= "XORI ";
+					alu_op = 6'd11;
 				end
 				if (f3 == 3'h6) begin        // ori
 					char_out <= "ORI  ";
+					alu_op = 6'd12;
 				end
 				if (f3 == 3'h7) begin        // andi
 					char_out <= "ANDI ";
+					alu_op = 6'd13;
 				end
 				if (f3 == 3'h1) begin        // slli
 					char_out <= "SLLI ";
+					alu_op = 6'd14;
 				end
 				if (f3 == 3'h5) begin        // srli & srai
 					if (f7 == 7'h00) begin
 						 char_out <= "SRLI ";
+						 alu_op = 6'd15;
 					end
 					if (f7 == 7'h20) begin
 						 char_out <= "SRAI ";
+						 alu_op = 6'd16;
 					end
 				end
 				if (f3 == 3'h2) begin        // slti
 					char_out <= "SLTI ";
+					alu_op = 6'd17;
 				end
 				if (f3 == 3'h3) begin        // sltiu
 					char_out <= "SLTIU";
+					alu_op = 6'd18;
 				end
 			end
 			
