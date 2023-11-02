@@ -3,6 +3,8 @@
 module instruction_decode(
         input clock,
         input [31:0] data_in,
+        input reset,
+
 
         output reg [4:0] rs1,
         output reg [4:0] rs2,
@@ -17,7 +19,16 @@ module instruction_decode(
                 imm = 0;
         end
 
-        always @(posedge clock) begin
+        always @(posedge clock or posedge reset) begin
+        if (reset == 1'b1) begin
+                imm     <= 0;
+                rs1     <= 0;
+                rs2     <= 0;
+                rd      <= 0;
+                opcode  <= 0;
+                func3   <= 0;
+                func7   <= 0;
+        end else begin
                 opcode <= data_in[6:0];
 
                 rs1 <= data_in[19:15];
@@ -81,5 +92,6 @@ module instruction_decode(
                         imm[19:12] = data_in[19:12];
 
                 end
+        end
         end
 endmodule

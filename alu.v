@@ -3,13 +3,17 @@ module alu (
 	input wire [31:0] data_in_2,
 	input wire [5:0] alu_op,
 	input wire clock,
+        input wire reset,
 	
 	
 	output reg [31:0] data_out
 
 );
 	
-	always @ (posedge clock) begin
+        always @(posedge clock or posedge reset) begin
+        if (reset == 1'b1) begin
+                data_out = 0;
+        end else begin
 		case (alu_op) 
 			6'd0	:	data_out = data_in_1 + data_in_2; //ADD
 			6'd1	:	data_out = data_in_1 - data_in_2; //SUB
@@ -32,6 +36,7 @@ module alu (
 			6'd17	:	data_out = (data_in_1 < data_in_2) ? 1 : 0; //SLTI
 			6'd18	:	data_out = (data_in_1 < data_in_2) ? 1 : 0; //SLTIU  (MAYBE CHANGE FOR SIGNEDNESS)
 		endcase	
+        end
 	end	
 	
 

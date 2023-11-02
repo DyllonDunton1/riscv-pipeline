@@ -50,7 +50,7 @@ module register_file (
 	reg [31:0] x31 = 32'd31;
 	
 	
-	always @ (posedge clock) begin
+	always @ (posedge clock or posedge reset) begin
 		
 		//DO WRITE FIRST
 		if (reset) begin
