@@ -7,9 +7,10 @@ module id_ex (
 	input wire alusrc_in,
 	input wire memtoreg_in,
 	input wire we_in,
-        input wire reg_en_in,
+   input wire reg_en_in,
+	input wire aluop_in,
 	input wire clock,
-        input wire reset,
+   input wire reset,
 	
 	output reg [31:0] data_out_1,
 	output reg [31:0] data_out_2,
@@ -19,7 +20,8 @@ module id_ex (
 	output reg alusrc_out,
 	output reg memtoreg_out,
 	output reg we_out,
-        output reg reg_en_out
+   output reg reg_en_out,
+	output reg aluop_out
 );
 
         always @(posedge clock or posedge reset) begin
@@ -33,6 +35,7 @@ module id_ex (
                 memtoreg_out = 0;
                 we_out = 0;
                 reg_en_out = 0;
+					 aluop_out = 0;
         end else begin
                 data_out_1 = data_in_1;
                 data_out_2 = data_in_2;
@@ -43,7 +46,9 @@ module id_ex (
                 memtoreg_out = memtoreg_in;
                 we_out = we_in;
                 reg_en_out = reg_en_in;
+					 aluop_out = aluop_in;
         end
+		  
 	end
 
 endmodule
