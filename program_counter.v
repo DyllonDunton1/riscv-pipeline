@@ -7,14 +7,14 @@ module program_counter (
 );
 	
 	initial begin
-		current = 0;
-	end	
+		current = -1;
+	end
 	
 	always @ (posedge clock or posedge reset) begin
 		if (reset == 1'b1) begin
-			current = 6'd0;
+			current = 6'd63;
 		end else begin
-			current = previous + 32'd1;
+			current = previous + 6'd1;
 		end
 	end	
 	
