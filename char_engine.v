@@ -91,7 +91,7 @@ module char_engine(
 	//keep these numbers at one character, use hex digit for >9
 	//Change for each milestone/test stuff
 	reg [7:0] milestone_num = "2";									//Enter the Miletsone Number here, in " "
-	reg [7:0] test_num = 	  "1";									//Enter the test number here in " "
+	reg [7:0] test_num =	  "1";									//Enter the test number here in " "
 	
 	
 /*------------------------------------------------------------------------------------------------
@@ -117,10 +117,10 @@ module char_engine(
 	reg [(gpx04_chars*8):0] gpx04_label = "GP REGISTER 04";				//put label in " "
 	parameter gpx04_chars = 14;													//# of characters, including spaces/other punct.
 	
-	reg [(gpx05_chars*8):0] gpx05_label = "WB IN         ";				//put label in " "
+	reg [(gpx05_chars*8):0] gpx05_label = "WB IN	     ";				//put label in " "
 	parameter gpx05_chars = 14;													//# of characters, including spaces/other punct.
 	
-	reg [(gpx06_chars*8):0] gpx06_label = "WB OUT        ";				//put label in " "
+	reg [(gpx06_chars*8):0] gpx06_label = "WB OUT	     ";				//put label in " "
 	parameter gpx06_chars = 14;													//# of characters, including spaces/other punct.
 	
 	reg [(gpx07_chars*8):0] gpx07_label = "FDDEEMMW      ";				//put label in " "
@@ -144,10 +144,10 @@ module char_engine(
 	reg [(gpx0D_chars*8):0] gpx0D_label = "  RDR1R2      ";				//put label in " "
 	parameter gpx0D_chars = 14;													//# of characters, including spaces/other punct.
 	
-	reg [(gpx0E_chars*8):0] gpx0E_label = "ALU OUT       ";				//put label in " "
+	reg [(gpx0E_chars*8):0] gpx0E_label = "ALU OUT	     ";				//put label in " "
 	parameter gpx0E_chars = 14;													//# of characters, including spaces/other punct.
 	
-	reg [(gpx0F_chars*8):0] gpx0F_label = "ALU OP        ";				//put label in " "
+	reg [(gpx0F_chars*8):0] gpx0F_label = "ALU OP	     ";				//put label in " "
 	parameter gpx0F_chars = 14;													//# of characters, including spaces/other punct.
 	
 
