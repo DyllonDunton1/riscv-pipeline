@@ -17,6 +17,7 @@ module controller (
 	output reg MEMTOREG,
 	output reg WRITEBACK_EN,
 	output reg REG_EN,
+	output reg branch,
 	
 	output reg [8:0] type,
 	
@@ -34,6 +35,7 @@ module controller (
 		REG_EN = 0;
 		type = 0;
 		alu_op = 6'd0;
+		branch = 0;
 	end
 
 	always @(posedge clock or posedge reset) begin
@@ -46,6 +48,7 @@ module controller (
 		REG_EN = 0;
 		type = 0;
 		alu_op = 6'd0;
+		branch = 0;
 	end else begin
 		if (opcode == 7'd0) begin
 		//NOP
@@ -57,6 +60,7 @@ module controller (
 			REG_EN = 0;
 			WRITEBACK_EN = 0;
 			alu_op = 6'd0;
+			branch = 0;
 		end
 		if (opcode == 7'b0110011) begin
 			//R-TYPE
@@ -66,6 +70,7 @@ module controller (
 			MEMTOREG = 0;
 			WRITEBACK_EN = 0;
 			REG_EN = 1;
+			branch = 0;
 			if (f3 == 3'h0) begin
 				//add or sub
 				if (f7 == 7'h00) begin
@@ -133,6 +138,7 @@ module controller (
 			MEMTOREG = 0;
 			WRITEBACK_EN = 0;
 			REG_EN = 1;
+			branch = 0;
 
 			if (f3 == 3'h0) begin	     // addi
 				char_out <= "ADDI ";
@@ -184,6 +190,7 @@ module controller (
 			MEMTOREG = 1;
 			WRITEBACK_EN = 0;
 			REG_EN = 1;
+			branch = 0;
 
 			if (f3 == 3'h0) begin	     // lb
 				char_out <= "LB   ";
@@ -211,7 +218,7 @@ module controller (
 			MEMTOREG = 0;
 			WRITEBACK_EN = 1;
 			REG_EN = 0;
-
+			branch = 0;
 
 
 			if (f3 == 3'h0) begin
@@ -237,7 +244,7 @@ module controller (
 			MEMTOREG = 0;
 			WRITEBACK_EN = 0;
 			REG_EN = 0;
-
+			branch = 1;
 
 			if (f3 == 3'h0) begin	     // beq
 				char_out <= "BEQ  ";
@@ -268,6 +275,7 @@ module controller (
 			MEMTOREG = 0;
 			WRITEBACK_EN = 0;
 			REG_EN = 1;
+			branch = 1;
 
 			//jump and link
 			char_out <= "JAL  ";
@@ -281,6 +289,7 @@ module controller (
 			MEMTOREG = 0;
 			WRITEBACK_EN = 0;
 			REG_EN = 1;
+			branch = 0;
 
 			//load upper imm
 			char_out <= "LUI  ";
@@ -293,6 +302,7 @@ module controller (
 			MEMTOREG = 0;
 			WRITEBACK_EN = 0;
 			REG_EN = 1;
+			branch = 1;
 
 			//add upper imm to pc
 			char_out <= "AUIPC";
@@ -306,6 +316,7 @@ module controller (
 			MEMTOREG = 0;
 			WRITEBACK_EN = 0;
 			REG_EN = 1;
+			branch = 1;
 
 			if (f3 == 3'h0) begin	     // jalr
 				char_out <= "JALR ";

@@ -4,6 +4,7 @@ module instruction_decode(
 	input clock,
 	input [31:0] data_in,
 	input reset,
+	input succ,
 
 
 	output reg [4:0] rs1,
@@ -24,7 +25,16 @@ module instruction_decode(
 		opcode	<= 0;
 		func3	<= 0;
 		func7	<= 0;
-	end else begin
+	end else
+	if (succ == 1'b1) begin
+		imm	<= 0;
+		rs1	<= 0;
+		rs2	<= 0;
+		rd	<= 0;
+		opcode <= 0;
+		func3	<= 0;
+		func7	<= 0;
+	end else	begin
 		opcode <= data_in[6:0];
 
 		rs1 <= data_in[19:15];
