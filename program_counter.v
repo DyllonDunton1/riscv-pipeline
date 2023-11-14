@@ -17,15 +17,11 @@ module program_counter (
 		if (reset == 1'b1) begin
 			current = 6'd63;
 		end else begin
-			if (stall == 0) begin
-				if (succ == 1) begin
-					current = new_addr;
-				end
-				else begin
-					current = previous + 1;
-				end
-				
-				
+			if (succ == 1) begin
+				current = new_addr;
+			end
+			else begin
+				current = previous + 1;
 			end	
 		end
 	end	

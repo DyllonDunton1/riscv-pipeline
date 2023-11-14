@@ -79,7 +79,7 @@ module instruction_decode(
 			imm[31:13] <= 0;
 			imm[12] <= data_in[31];
 			imm[11] <= data_in[7];
-			imm[10:5] <= data_in[30:25];
+			imm[10:5] <= data_in[30:25];		
 			imm[4:1] <= data_in[11:8];
 			imm[0] <= 1'b0;
 
