@@ -6,7 +6,6 @@ module instruction_decode(
 	input reset,
 	input succ,
 
-
 	output reg [4:0] rs1,
 	output reg [4:0] rs2,
 	output reg [4:0] rd,
@@ -15,6 +14,8 @@ module instruction_decode(
 	output reg [6:0] func7,
 	output reg [31:0] imm
 );
+
+	// keep track of previous rd's for hazard detection
 
 	always @(posedge clock or posedge reset) begin
 	if (reset == 1'b1) begin
@@ -31,10 +32,11 @@ module instruction_decode(
 		rs1	<= 0;
 		rs2	<= 0;
 		rd	<= 0;
-		opcode <= 0;
+		opcode 	<= 0;
 		func3	<= 0;
 		func7	<= 0;
-	end else	begin
+	end
+	else begin
 		opcode <= data_in[6:0];
 
 		rs1 <= data_in[19:15];
@@ -43,6 +45,7 @@ module instruction_decode(
 
 		func3 <= data_in[14:12];
 		func7 <= data_in[31:25];
+
 
 		if (data_in[6:0] == 7'b0110011) begin
 		/* R-TYPE */

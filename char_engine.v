@@ -123,10 +123,10 @@ module char_engine(
 	reg [(gpx06_chars*8):0] gpx06_label = "WB OUT	     ";				//put label in " "
 	parameter gpx06_chars = 14;													//# of characters, including spaces/other punct.
 	
-	reg [(gpx07_chars*8):0] gpx07_label = "FDDEEMMW      ";				//put label in " "
+	reg [(gpx07_chars*8):0] gpx07_label = "REGFILE OUT1  ";				//put label in " "
 	parameter gpx07_chars = 14;													//# of characters, including spaces/other punct.
 	
-	reg [(gpx08_chars*8):0] gpx08_label = "PIPELINE M2REG";				//put label in " "
+	reg [(gpx08_chars*8):0] gpx08_label = "REGFILE OUT2  ";				//put label in " "
 	parameter gpx08_chars = 14;													//# of characters, including spaces/other punct.
 	
 	reg [(gpx09_chars*8):0] gpx09_label = "PIPELINE DADDR";				//put label in " "
