@@ -17,11 +17,12 @@ module controller (
 	output reg MEMTOREG,
 	output reg WRITEBACK_EN,
 	output reg REG_EN,
-	output reg branch,
+	output reg [2:0] branch,
 	
 	output reg [8:0] type,
 	
 	output reg [5:0] alu_op
+	
 
 );
 	
@@ -248,21 +249,27 @@ module controller (
 
 			if (f3 == 3'h0) begin	     // beq
 				char_out <= "BEQ  ";
+				branch = 3'd1;
 			end
 			if (f3 == 3'h1) begin	     // bne
 				char_out <= "BNE  ";
+				branch = 3'd2;
 			end
 			if (f3 == 3'h4) begin	     // blt
 				char_out <= "BLT  ";
+				branch = 3'd3;
 			end
 			if (f3 == 3'h5) begin	     // bge
 				char_out <= "BGE  ";
+				branch = 3'd4;
 			end
 			if (f3 == 3'h6) begin	     // bltu
 				char_out <= "BLTU ";
+				branch = 3'd5;
 			end
 			if (f3 == 3'h7) begin	     // bgeu
 				char_out <= "BGEU ";
+				branch = 3'd6;
 			end
 		end
 
@@ -275,7 +282,7 @@ module controller (
 			MEMTOREG = 0;
 			WRITEBACK_EN = 0;
 			REG_EN = 1;
-			branch = 1;
+			branch = 3'd7;
 
 			//jump and link
 			char_out <= "JAL  ";
