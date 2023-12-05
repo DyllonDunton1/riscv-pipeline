@@ -1,12 +1,12 @@
 module program_counter ( 
-	input wire [7:0] previous,
+	input wire [31:0] previous,
 	input wire clock,
 	input wire reset,
 	input wire stall,
 	input wire succ,
 	input wire [31:0] new_addr,
 
-	output reg [7:0] current
+	output reg [31:0] current
 );
 
 	initial begin

@@ -5,6 +5,7 @@ module instruction_decode(
 	input [31:0] data_in,
 	input reset,
 	input succ,
+	input [31:0] pipe_pc_in,
 
 	output reg [4:0] rs1,
 	output reg [4:0] rs2,
@@ -12,7 +13,8 @@ module instruction_decode(
 	output reg [6:0] opcode,
 	output reg [2:0] func3,
 	output reg [6:0] func7,
-	output reg [31:0] imm
+	output reg [31:0] imm,
+	output reg [31:0] pipe_pc_out
 );
 
 	// keep track of previous rd's for hazard detection
@@ -26,6 +28,7 @@ module instruction_decode(
 		opcode	<= 0;
 		func3	<= 0;
 		func7	<= 0;
+		pipe_pc_out <= 0;
 	end else
 	if (succ == 1'b1) begin
 		imm	<= 0;
@@ -35,6 +38,7 @@ module instruction_decode(
 		opcode 	<= 0;
 		func3	<= 0;
 		func7	<= 0;
+		pipe_pc_out <= 0;
 	end
 	else begin
 		opcode <= data_in[6:0];
@@ -45,6 +49,7 @@ module instruction_decode(
 
 		func3 <= data_in[14:12];
 		func7 <= data_in[31:25];
+		pipe_pc_out = pipe_pc_in;
 
 
 		if (data_in[6:0] == 7'b0110011) begin
