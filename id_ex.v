@@ -41,7 +41,7 @@ module id_ex (
 		reg_en_out = 0;
 		aluop_out = 0;
 		br_out = 0;
-		pipe_pc_out = 0;
+		pipe_pc_out = 32'h00400000;
 	end else begin
 		data_out_1 = data_in_1;
 		data_out_2 = data_in_2;

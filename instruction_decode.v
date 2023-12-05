@@ -28,7 +28,7 @@ module instruction_decode(
 		opcode	<= 0;
 		func3	<= 0;
 		func7	<= 0;
-		pipe_pc_out <= 0;
+		pipe_pc_out <= 32'h00400000;
 	end else
 	if (succ == 1'b1) begin
 		imm	<= 0;

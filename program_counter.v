@@ -10,12 +10,12 @@ module program_counter (
 );
 
 	initial begin
-		current = 8'h00400000 - 8'h4;
+		current = 32'h00400000 - 32'h4;
 	end
 
 	always @ (posedge clock or posedge reset) begin
 		if (reset == 1'b1) begin
-			current = 8'h00400000 - 8'h4;
+			current = 32'h00400000 - 32'h4;
 		end else begin
 			if (succ == 1) begin
  /* -1 because pc will branch one clock cycle after the instruction is issued */

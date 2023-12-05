@@ -45,7 +45,7 @@ module alu (
 						6'd17	:	data_out = (data_in_1 < data_in_2) ? 1 : 0; //SLTI
 						6'd18	:	data_out = (data_in_1 < data_in_2) ? 1 : 0; //SLTIU  (MAYBE CHANGE FOR SIGNEDNESS)
 						
-						6'd19 : data_out = pc_in + (data_in_2<<12);
+						6'd19 : data_out = pc_in + data_in_2;
 					endcase	
         end
 	end	
