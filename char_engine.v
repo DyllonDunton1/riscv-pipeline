@@ -102,7 +102,7 @@ module char_engine(
 -------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------*/
 
-	reg [(gpx00_chars*8):0] gpx00_label = "PC SRC ALU SRC";				//put label in " "
+	reg [(gpx00_chars*8):0] gpx00_label = "STALL  ALU SRC";				//put label in " "
 	parameter gpx00_chars = 14;													//# of characters, including spaces/other punct.
 	
 	reg [(gpx01_chars*8):0] gpx01_label = "MEM TO REG    ";				//put label in " "
@@ -117,7 +117,7 @@ module char_engine(
 	reg [(gpx04_chars*8):0] gpx04_label = "GP REGISTER 04";				//put label in " "
 	parameter gpx04_chars = 14;													//# of characters, including spaces/other punct.
 	
-	reg [(gpx05_chars*8):0] gpx05_label = "WB IN	     ";				//put label in " "
+	reg [(gpx05_chars*8):0] gpx05_label = "WB IN	        ";				//put label in " "
 	parameter gpx05_chars = 14;													//# of characters, including spaces/other punct.
 	
 	reg [(gpx06_chars*8):0] gpx06_label = "WB OUT	     ";				//put label in " "
@@ -129,10 +129,10 @@ module char_engine(
 	reg [(gpx08_chars*8):0] gpx08_label = "REGFILE OUT2  ";				//put label in " "
 	parameter gpx08_chars = 14;													//# of characters, including spaces/other punct.
 	
-	reg [(gpx09_chars*8):0] gpx09_label = "PIPELINE DADDR";				//put label in " "
+	reg [(gpx09_chars*8):0] gpx09_label = "GP REGISTER 09";				//put label in " "
 	parameter gpx09_chars = 14;													//# of characters, including spaces/other punct.
 	
-	reg [(gpx0A_chars*8):0] gpx0A_label = "GP REGISTER 0A";				//put label in " "
+	reg [(gpx0A_chars*8):0] gpx0A_label = "SUCC   BR TYPE";				//put label in " "
 	parameter gpx0A_chars = 14;													//# of characters, including spaces/other punct.
 	
 	reg [(gpx0B_chars*8):0] gpx0B_label = "GP REGISTER 0B";				//put label in " "

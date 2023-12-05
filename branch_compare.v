@@ -1,50 +1,62 @@
 module branch_compare ( 
-	input wire [2:0] br,
+	input wire [3:0] br,
 	input wire reset,
 	input wire [31:0] rs1,
 	input wire [31:0] rs2,
 	input wire [31:0] imm, 
 	
 	output reg [31:0] new_address,
-	output reg success
+	output reg success,
+	output reg [31:0] branch_check,
+	output reg [31:0] result
 );
+
+	reg signed [31:0] comp1minus2;
+
 	initial begin
 		success = 0;
-	end	
-	
+	end
+
+
 	always @ (*) begin
 		if (reset == 1'b1) begin
-			new_address = 1;
+			new_address = 32'h00400004;
 			success = 0;
 		end else begin
 			if (br != 0) begin //IF B-TYPE INSTRUCTION
 				success = 0;
-				if (((rs2 - rs1) == 32'd0) && br == 3'd1) begin //IF BEQ
+				comp1minus2 = rs1 - rs2;
+
+				if ((comp1minus2 == 32'd0) && br == 4'd1) begin //IF BEQ
 					new_address = imm;
 					success = 1;
-				end
-				if (((rs2 - rs1) != 32'd0) && br == 3'd2) begin //IF BNE
+				end else
+				if ((comp1minus2 != 32'd0) && br == 4'd2) begin //IF BNE
 					new_address = imm;
 					success = 1;
-				end
-				if (((rs2 - rs1) < 32'd0) && br == 3'd3) begin //IF BLT
+				end else
+				if ((comp1minus2[31] == 1'b1) && br == 4'd3) begin //IF BLT
 					new_address = imm;
 					success = 1;
-				end
-				if (((rs2 - rs1) >= 32'd0) && br == 3'd4) begin //IF BGE
+				end else
+				if ((comp1minus2[31] == 1'b0) && br == 4'd4) begin //IF BGE
 					new_address = imm;
 					success = 1;
-				end
-				if (((rs2 - rs1) < 32'd0) && br == 3'd5) begin //IF BLTU
+				end else
+				if ((comp1minus2[31] == 1'b1) && br == 4'd5) begin //IF BLTU
 					new_address = imm;
 					success = 1;
-				end
-				if (((rs2 - rs1) >= 32'd0) && br == 3'd6) begin //IF BGEU
+				end else
+				if ((comp1minus2[31] == 1'b0) && br == 4'd6) begin //IF BGEU
 					new_address = imm;
 					success = 1;
-				end
-				if (br == 3'd7) begin //IF JAL
+				end else
+				if (br == 4'd7) begin //IF JAL
 					new_address = imm;
+					success = 1;
+				end else
+				if	(br == 4'd8) begin
+					new_address = imm + rs1;
 					success = 1;
 				end
 			end

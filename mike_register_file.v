@@ -29,7 +29,8 @@ module mike_register_file(
 	always @(posedge clock or posedge reset) begin
 		if (reset) begin
 			for (i = 0; i < 32; i = i + 1) begin
-				r[i] <= i;
+				//r[i] <= i;
+				r[i] <= 0;
 			end
 			//data_out_1 = 0;
 			//data_out_2 = 0;

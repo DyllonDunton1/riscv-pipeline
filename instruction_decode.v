@@ -96,11 +96,7 @@ module instruction_decode(
 		end else if (data_in[6:0] == 7'b1100011) begin
 		/* B TYPE */
 			
-			if (data_in[31] == 1) begin
-					imm[31:13] <= 19'hFFFFF;
-			end else begin
-					imm[31:13] <= 19'd0;
-			end
+			imm[31:13] <= 0;
 			imm[12] <= data_in[31];
 			imm[11] <= data_in[7];
 			imm[10:5] <= data_in[30:25];		

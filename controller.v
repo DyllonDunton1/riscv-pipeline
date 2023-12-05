@@ -17,7 +17,7 @@ module controller (
 	output reg MEMTOREG,
 	output reg WRITEBACK_EN,
 	output reg REG_EN,
-	output reg [2:0] branch,
+	output reg [3:0] branch,
 	
 	output reg [8:0] type,
 	
@@ -25,8 +25,7 @@ module controller (
 	
 
 );
-	
-	
+
 	initial begin
 		char_out = "XXXXX";
 		PCSRC = 0;
@@ -37,6 +36,7 @@ module controller (
 		type = 0;
 		alu_op = 6'd0;
 		branch = 0;
+		//timer = 0;
 	end
 
 	always @(posedge clock or posedge reset) begin
@@ -245,31 +245,30 @@ module controller (
 			MEMTOREG = 0;
 			WRITEBACK_EN = 0;
 			REG_EN = 0;
-			branch = 1;
 
 			if (f3 == 3'h0) begin	     // beq
 				char_out <= "BEQ  ";
-				branch = 3'd1;
+				branch = 4'd1;
 			end
 			if (f3 == 3'h1) begin	     // bne
 				char_out <= "BNE  ";
-				branch = 3'd2;
+				branch = 4'd2;
 			end
 			if (f3 == 3'h4) begin	     // blt
 				char_out <= "BLT  ";
-				branch = 3'd3;
+				branch = 4'd3;
 			end
 			if (f3 == 3'h5) begin	     // bge
 				char_out <= "BGE  ";
-				branch = 3'd4;
+				branch = 4'd4;
 			end
 			if (f3 == 3'h6) begin	     // bltu
 				char_out <= "BLTU ";
-				branch = 3'd5;
+				branch = 4'd5;
 			end
 			if (f3 == 3'h7) begin	     // bgeu
 				char_out <= "BGEU ";
-				branch = 3'd6;
+				branch = 4'd6;
 			end
 		end
 
@@ -282,7 +281,7 @@ module controller (
 			MEMTOREG = 0;
 			WRITEBACK_EN = 0;
 			REG_EN = 1;
-			branch = 3'd7;
+			branch = 4'd7;
 
 			//jump and link
 			char_out <= "JAL  ";
@@ -310,7 +309,7 @@ module controller (
 			WRITEBACK_EN = 0;
 			REG_EN = 1;
 			branch = 0;
-			
+
 			alu_op = 6'd19;
 
 			//add upper imm to pc
@@ -325,7 +324,7 @@ module controller (
 			MEMTOREG = 0;
 			WRITEBACK_EN = 0;
 			REG_EN = 1;
-			branch = 1;
+			branch = 4'd8;
 
 			if (f3 == 3'h0) begin	     // jalr
 				char_out <= "JALR ";
@@ -333,5 +332,21 @@ module controller (
 		end
 	end
 	end
+
+	//reg [4:0] timer;
+	//reg branch;
+
+	//always @(posedge clock_50) begin
+	//	if (branch != 0 && timer >= 5'd10) begin
+	//		branch_send <= branch;
+	//	end else
+	//	if (branch != 0 && timer < 5'd10) begin
+	//		timer <= timer + 1;
+	//	end else
+	//	if (branch == 0) begin
+	//		branch_send <= 0;
+	//		timer <= 0;
+	//	end
+	//end
 
 endmodule
