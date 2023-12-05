@@ -305,11 +305,13 @@ module controller (
 			//U-TYPE
 			type = 9'b000000010;
 			PCSRC = 0;
-			ALUSRC = 0;
+			ALUSRC = 1;
 			MEMTOREG = 0;
 			WRITEBACK_EN = 0;
 			REG_EN = 1;
-			branch = 1;
+			branch = 0;
+			
+			alu_op = 6'd19;
 
 			//add upper imm to pc
 			char_out <= "AUIPC";

@@ -4,6 +4,7 @@ module alu (
 	input wire [5:0] alu_op,
 	input wire clock,
    input wire reset,
+	input wire [5:0] pc_in,
 	
 	
 	output reg [31:0] data_out,
@@ -43,6 +44,8 @@ module alu (
 						6'd16	:	data_out = data_in_1 >> data_in_2; //SRAI  (MAYBE CHANGE FOR SIGNEDNESS)
 						6'd17	:	data_out = (data_in_1 < data_in_2) ? 1 : 0; //SLTI
 						6'd18	:	data_out = (data_in_1 < data_in_2) ? 1 : 0; //SLTIU  (MAYBE CHANGE FOR SIGNEDNESS)
+						
+						6'd19 : data_out = pc_in + (data_in_2<<12)
 					endcase	
         end
 	end	
