@@ -58,7 +58,7 @@ module instruction_decode(
 
 		end else if (data_in[6:0] == 7'b0010011) begin
 		/* I TYPE */
-			
+
 			if (data_in[31] == 1) begin
 					imm[31:12] <= 20'hFFFFF;
 			end else begin
@@ -68,7 +68,7 @@ module instruction_decode(
 
 		end else if (data_in[6:0] == 7'b0000011) begin
 		/* I TYPE */
-			
+
 			if (data_in[31] == 1) begin
 					imm[31:12] <= 20'hFFFFF;
 			end else begin
@@ -78,7 +78,7 @@ module instruction_decode(
 
 		end else if (data_in[6:0] == 7'b1100111) begin
 		/* I TYPE */
-			
+
 			if (data_in[31] == 1) begin
 					imm[31:12] <= 20'hFFFFF;
 			end else begin
@@ -95,11 +95,15 @@ module instruction_decode(
 
 		end else if (data_in[6:0] == 7'b1100011) begin
 		/* B TYPE */
-			
-			imm[31:13] <= 0;
+
+			if (data_in[31] == 1) begin
+					imm[31:13] <= 19'hFFFFF;
+			end else begin
+					imm[31:13] <= 19'h00000;
+			end
 			imm[12] <= data_in[31];
 			imm[11] <= data_in[7];
-			imm[10:5] <= data_in[30:25];		
+			imm[10:5] <= data_in[30:25];
 			imm[4:1] <= data_in[11:8];
 			imm[0] <= 1'b0;
 

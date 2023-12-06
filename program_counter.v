@@ -19,7 +19,7 @@ module program_counter (
 		end else begin
 			if (succ == 1) begin
  /* -1 because pc will branch one clock cycle after the instruction is issued */
-				current = previous + new_addr - 4;
+				current = new_addr;
 			end else if (stall == 1) begin
 				// the stall will not be received in time
 				current = previous;

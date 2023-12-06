@@ -13,6 +13,7 @@ module id_ex (
 	input wire clock,
    input wire reset,
 	input wire [31:0] pipe_pc_in,
+	input wire jump_src_in,
 
 	output reg [31:0] data_out_1,
 	output reg [31:0] data_out_2,
@@ -25,7 +26,8 @@ module id_ex (
    output reg reg_en_out,
 	output reg [5:0] aluop_out,
 	output reg br_out,
-	output reg [31:0] pipe_pc_out
+	output reg [31:0] pipe_pc_out,
+	output reg jump_src_out
 );
 
 	always @(posedge clock or posedge reset) begin
@@ -41,6 +43,7 @@ module id_ex (
 		reg_en_out = 0;
 		aluop_out = 0;
 		br_out = 0;
+		jump_src_out = 0;
 		pipe_pc_out = 32'h00400000;
 	end else begin
 		data_out_1 = data_in_1;
@@ -54,7 +57,13 @@ module id_ex (
 		reg_en_out = reg_en_in;
 		aluop_out = aluop_in;
 		br_out = br_in;
-		pipe_pc_out = pipe_pc_in;
+		jump_src_out = jump_src_in;
+		
+		if (jump_src_in) begin
+			pipe_pc_out = pipe_pc_in + 4;
+		end else begin
+			pipe_pc_out = pipe_pc_in;
+		end
 	end
 
 	end

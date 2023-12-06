@@ -3,12 +3,11 @@ module branch_compare (
 	input wire reset,
 	input wire [31:0] rs1,
 	input wire [31:0] rs2,
-	input wire [31:0] imm, 
+	input wire [31:0] imm,
+	input wire [31:0] pc_val,
 	
 	output reg [31:0] new_address,
-	output reg success,
-	output reg [31:0] branch_check,
-	output reg [31:0] result
+	output reg success
 );
 
 	reg signed [31:0] comp1minus2;
@@ -28,31 +27,31 @@ module branch_compare (
 				comp1minus2 = rs1 - rs2;
 
 				if ((comp1minus2 == 32'd0) && br == 4'd1) begin //IF BEQ
-					new_address = imm;
+					new_address = pc_val + imm;
 					success = 1;
 				end else
 				if ((comp1minus2 != 32'd0) && br == 4'd2) begin //IF BNE
-					new_address = imm;
+					new_address = pc_val + imm;
 					success = 1;
 				end else
 				if ((comp1minus2[31] == 1'b1) && br == 4'd3) begin //IF BLT
-					new_address = imm;
+					new_address = pc_val + imm;
 					success = 1;
 				end else
 				if ((comp1minus2[31] == 1'b0) && br == 4'd4) begin //IF BGE
-					new_address = imm;
+					new_address = pc_val + imm;
 					success = 1;
 				end else
 				if ((comp1minus2[31] == 1'b1) && br == 4'd5) begin //IF BLTU
-					new_address = imm;
+					new_address = pc_val + imm;
 					success = 1;
 				end else
 				if ((comp1minus2[31] == 1'b0) && br == 4'd6) begin //IF BGEU
-					new_address = imm;
+					new_address = pc_val + imm;
 					success = 1;
 				end else
 				if (br == 4'd7) begin //IF JAL
-					new_address = imm;
+					new_address = pc_val + imm;
 					success = 1;
 				end else
 				if	(br == 4'd8) begin

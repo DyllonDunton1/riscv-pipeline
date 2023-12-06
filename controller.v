@@ -21,7 +21,8 @@ module controller (
 	
 	output reg [8:0] type,
 	
-	output reg [5:0] alu_op
+	output reg [5:0] alu_op,
+	output reg JUMP_SRC
 	
 
 );
@@ -33,6 +34,7 @@ module controller (
 		MEMTOREG = 0;
 		WRITEBACK_EN = 0;
 		REG_EN = 0;
+		JUMP_SRC = 0;
 		type = 0;
 		alu_op = 6'd0;
 		branch = 0;
@@ -47,6 +49,7 @@ module controller (
 		MEMTOREG = 0;
 		WRITEBACK_EN = 0;
 		REG_EN = 0;
+		JUMP_SRC = 0;
 		type = 0;
 		alu_op = 6'd0;
 		branch = 0;
@@ -59,6 +62,7 @@ module controller (
 			ALUSRC = 0;
 			MEMTOREG = 0;
 			REG_EN = 0;
+			JUMP_SRC = 0;
 			WRITEBACK_EN = 0;
 			alu_op = 6'd0;
 			branch = 0;
@@ -70,6 +74,7 @@ module controller (
 			ALUSRC = 0;
 			MEMTOREG = 0;
 			WRITEBACK_EN = 0;
+			JUMP_SRC = 0;
 			REG_EN = 1;
 			branch = 0;
 			if (f3 == 3'h0) begin
@@ -138,6 +143,7 @@ module controller (
 			ALUSRC = 1;
 			MEMTOREG = 0;
 			WRITEBACK_EN = 0;
+			JUMP_SRC = 0;
 			REG_EN = 1;
 			branch = 0;
 
@@ -190,6 +196,7 @@ module controller (
 			ALUSRC = 1;
 			MEMTOREG = 1;
 			WRITEBACK_EN = 0;
+			JUMP_SRC = 0;
 			REG_EN = 1;
 			branch = 0;
 
@@ -218,6 +225,7 @@ module controller (
 			ALUSRC = 1;
 			MEMTOREG = 0;
 			WRITEBACK_EN = 1;
+			JUMP_SRC = 0;
 			REG_EN = 0;
 			branch = 0;
 
@@ -244,6 +252,7 @@ module controller (
 			ALUSRC = 0;
 			MEMTOREG = 0;
 			WRITEBACK_EN = 0;
+			JUMP_SRC = 0;
 			REG_EN = 0;
 
 			if (f3 == 3'h0) begin	     // beq
@@ -279,7 +288,8 @@ module controller (
 			PCSRC = 0;
 			ALUSRC = 0;
 			MEMTOREG = 0;
-			WRITEBACK_EN = 0;
+			WRITEBACK_EN = 1;
+			JUMP_SRC = 1;
 			REG_EN = 1;
 			branch = 4'd7;
 
@@ -322,8 +332,9 @@ module controller (
 			PCSRC = 0;
 			ALUSRC = 0;
 			MEMTOREG = 0;
-			WRITEBACK_EN = 0;
+			WRITEBACK_EN = 1;
 			REG_EN = 1;
+			JUMP_SRC = 1;
 			branch = 4'd8;
 
 			if (f3 == 3'h0) begin	     // jalr

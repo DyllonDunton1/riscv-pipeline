@@ -8,7 +8,7 @@ module clock_mux(
 	output reg clock_out
 );
 
-	reg [18:0] divisor;
+	reg [19:0] divisor;
 	reg clock1;
 	reg clock2;
 
@@ -21,10 +21,10 @@ module clock_mux(
 	// other clock outputs are divisions of clock_50
 	always @(posedge clock_50) begin
 		if (select == 2'b10) begin
-			clock1 <= divisor[15];
+			clock1 <= divisor[14];
 		end else
 		if (select == 2'b01) begin
-			clock2 <= divisor[18];
+			clock2 <= divisor[19];
 		end
 
 		divisor <= divisor + 1;
