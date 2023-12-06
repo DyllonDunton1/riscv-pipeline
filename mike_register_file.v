@@ -22,15 +22,23 @@ module mike_register_file(
 
 	initial begin
 		for (i = 0; i < 32; i = i + 1) begin
-			r[i] <= 0;
+			if (i == 2) begin
+				r[i] <= 32'h0000_00F8;
+			end else begin
+				r[i] <= 0;
+			end
 		end
 	end
 
 	always @(posedge clock or posedge reset) begin
 		if (reset) begin
 			for (i = 0; i < 32; i = i + 1) begin
-				//r[i] <= i;
-				r[i] <= 0;
+				if (i == 2) begin
+					r[i] <= 32'h0000_00F8; //stack pointer
+				end else begin
+					//r[i] <= i;
+					r[i] <= 0;
+				end
 			end
 			//data_out_1 = 0;
 			//data_out_2 = 0;
