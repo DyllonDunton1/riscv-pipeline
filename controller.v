@@ -288,7 +288,7 @@ module controller (
 			PCSRC = 0;
 			ALUSRC = 0;
 			MEMTOREG = 0;
-			WRITEBACK_EN = 1;
+			WRITEBACK_EN = 0;
 			JUMP_SRC = 1;
 			REG_EN = 1;
 			branch = 4'd7;
@@ -332,7 +332,7 @@ module controller (
 			PCSRC = 0;
 			ALUSRC = 0;
 			MEMTOREG = 0;
-			WRITEBACK_EN = 1;
+			WRITEBACK_EN = 0;
 			REG_EN = 1;
 			JUMP_SRC = 1;
 			branch = 4'd8;

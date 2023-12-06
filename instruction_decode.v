@@ -119,14 +119,14 @@ module instruction_decode(
 			imm[31:12] <= data_in[31:12];
 			imm[11:0] <= 0;
 
-		end else if (data_in[6:0] == 7'b1101111) begin
+		end else if (data_in[6:0] == 7'b1101111
+			  || data_in[6:0] == 7'b1100111) begin
 		/* J-TYPE */
 			if (data_in[31] == 1) begin
 					imm[31:21] <= 20'hFFFFF;
 			end else begin
 					imm[31:21] <= 20'h00000;
 			end
-			imm[31:21] <= 0;
 			imm[20] <= data_in[31];
 			imm[19:12] <= data_in[19:12];
 			imm[11] <= data_in[20];
