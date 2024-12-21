@@ -30,7 +30,7 @@ This one will be a little bit of a doozy. In order to get this working, we need 
 
 -Then we have two slightly different RAW hazards, and we either have to implement stalls or forwarding. I think it would be a good Idea to do stalling first. We can come back and do forwarding later for extra points (Heard from last years class)
 
-# Milestone 1d | Not Complete
+# Milestone 1d |  Complete
 
 This will be 1c on steroids. After doing two addi instructions to setup the registers, every single instruction is a RAW hazard, which means we will need to have a bullet proof stall setup. I feel like this should just work if 1c does
 
